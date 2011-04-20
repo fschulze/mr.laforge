@@ -19,7 +19,7 @@ setup(
     keywords='',
     author='Florian Schulze',
     author_email='florian.schulze@gmx.net',
-    url='http://github.com/fschulze/mr.developer',
+    url='http://github.com/fschulze/mr.laforge',
     license='BSD',
     packages=['mr', 'mr.laforge'],
     namespace_packages=['mr'],
