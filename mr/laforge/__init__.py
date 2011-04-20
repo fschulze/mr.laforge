@@ -16,6 +16,18 @@ def get_rpc(options):
     return xmlrpclib.ServerProxy('http://127.0.0.1', transport)
 
 
+def find_supervisord():
+    process_path = os.path.dirname(os.path.abspath(sys.argv[0]))
+    supervisord = os.path.join(process_path, 'supervisord')
+    if os.path.exists(supervisord):
+        return supervisord
+    supervisord = os.path.join(os.getcwd(), 'bin', 'supervisord')
+    if os.path.exists(supervisord):
+        return supervisord
+    print >> sys.stderr, "Couldn't find supervisord"
+    sys.exit(1)
+
+
 def up():
     options = ClientOptions()
     options.realize()
@@ -32,7 +44,8 @@ def up():
                 sys.stderr.write("\n")
             sys.stderr.write("Starting supervisord\n")
             configfile = os.path.join(os.getcwd(), options.configfile)
-            retcode = subprocess.call(["./bin/supervisord", "-c", configfile])
+            supervisord = find_supervisord()
+            retcode = subprocess.call([supervisord, "-c", configfile])
             if retcode != 0:
                 sys.exit(retcode)
             status = 'starting'
