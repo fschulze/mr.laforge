@@ -4,6 +4,8 @@ Changelog
 0.2 - Unreleased
 ----------------
 
+* Added supervisord plugin with ``kill`` command to send signals to processes.
+  [fschulze]
 
 
 0.1 - 2011-04-20

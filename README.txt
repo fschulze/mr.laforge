@@ -1,9 +1,12 @@
 Introduction
 ============
 
-**mr.laforge** is a utility for `supervisord`_ in a development environment.
+**mr.laforge** is a utility and plugin for `supervisord`_.
+
 It let's you easily make sure that ``supervisord`` and specific processes
 controlled by it are running from within shell and Python scripts.
+
+The plugin part adds a ``kill`` command to send signals to processes.
 
 .. _`supervisord`: http://supervisord.org/
 
@@ -68,3 +71,28 @@ Now everytime you run the ``paster`` script created by this, it's checked that
 
 .. _`zc.recipe.testrunner`: http://pypi.python.org/pypi/zc.recipe.testrunner
 .. _`zc.recipe.egg`: http://pypi.python.org/pypi/zc.recipe.egg
+
+Add as plugin to supervisord
+----------------------------
+
+To use the plugin part of mr.laforge, you have to add the following to your
+supervisord config::
+
+    [rpcinterface:laforge]
+    supervisor.rpcinterface_factory = mr.laforge.rpcinterface:make_laforge_rpcinterface
+
+    [ctlplugin:laforge]
+    supervisor.ctl_factory = mr.laforge.controllerplugin:make_laforge_controllerplugin
+
+You have to make sure that mr.laforge is importable by supervisord. In a
+buildout you would have to add the egg to supervisor like this::
+
+    [supervisor]
+    recipe = zc.recipe.egg
+    eggs =
+        supervisor
+        mr.laforge
+
+Now you can use the ``kill`` command::
+
+    ./bin/supervisorctl kill HUP nginx
