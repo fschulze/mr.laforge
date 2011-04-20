@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2 - Unreleased
+0.2 - 2011-04-20
 ----------------
 
 * Added supervisord plugin with ``kill`` command to send signals to processes.
