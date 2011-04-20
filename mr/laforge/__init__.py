@@ -28,7 +28,9 @@ def find_supervisord():
     sys.exit(1)
 
 
-def up():
+def up(*args):
+    if not args:
+        args = sys.argv[1:]
     options = ClientOptions()
     options.realize()
     status = "init"
@@ -59,3 +61,17 @@ def up():
                     sys.stderr.write(".")
                     sys.stderr.flush()
                 time.sleep(1)
+    if len(args):
+        for name in args:
+            info = rpc.supervisor.getProcessInfo(name)
+            if info['statename'] != 'RUNNING':
+                print "Starting %s" % name
+                try:
+                    rpc.supervisor.startProcess(name)
+                except xmlrpclib.Fault as e:
+                    if e.faultCode == 60: # already started
+                        continue
+                    print >> sys.stderr, e.faultCode, e.faultString
+                    sys.exit(1)
+            else:
+                print >> sys.stderr, "%s is already running" % name
