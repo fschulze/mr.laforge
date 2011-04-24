@@ -32,7 +32,7 @@ def up(*args):
     if not args:
         args = sys.argv[1:]
     options = ClientOptions()
-    options.realize()
+    options.realize(args=[])
     status = "init"
     while 1:
         try:

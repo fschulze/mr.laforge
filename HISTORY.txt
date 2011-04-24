@@ -4,6 +4,8 @@ Changelog
 0.3 - Unreleased
 ----------------
 
+* Don't pass command line options to supervisor code.
+  [fschulze]
 
 
 0.2 - 2011-04-20
