@@ -7,6 +7,9 @@ Changelog
 * Don't pass command line options to supervisor code.
   [fschulze]
 
+* Add supervisor_args keyword argument to ``up`` function.
+  [fschulze, witsch (Andreas Zeidler)]
+
 
 0.2 - 2011-04-20
 ----------------

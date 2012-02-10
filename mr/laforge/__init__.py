@@ -28,11 +28,15 @@ def find_supervisord():
     sys.exit(1)
 
 
-def up(*args):
+def up(*args, **kwargs):
     if not args:
         args = sys.argv[1:]
+    supervisor_args = kwargs.get('supervisor_args')
     options = ClientOptions()
-    options.realize(args=[])
+    if supervisor_args is None:
+        options.realize(args=[])
+    else:
+        options.realize(args=supervisor_args)
     status = "init"
     while 1:
         try:
@@ -47,7 +51,12 @@ def up(*args):
             sys.stderr.write("Starting supervisord\n")
             configfile = os.path.join(os.getcwd(), options.configfile)
             supervisord = find_supervisord()
-            retcode = subprocess.call([supervisord, "-c", configfile])
+            cmd = [supervisord]
+            if supervisor_args is None:
+                cmd.extend(["-c", configfile])
+            else:
+                cmd.extend(supervisor_args)
+            retcode = subprocess.call(cmd)
             if retcode != 0:
                 sys.exit(retcode)
             status = 'starting'

@@ -30,6 +30,14 @@ whether ``supervisord`` is running and if not will start it. You can also provid
 process names on the command line and those will be started if they are not
 already running.
 
+You can set the ``supervisor_args`` keyword argument to set supervisor arguments
+like the config file location::
+
+    [mr.laforge]
+    recipe = zc.recipe.egg
+    eggs = mr.laforge
+    arguments = supervisor_args=['-c', 'etc/my_supervisord.conf']
+
 Usage from a Python script
 --------------------------
 
