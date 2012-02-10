@@ -31,12 +31,9 @@ def find_supervisord():
 def up(*args, **kwargs):
     if not args:
         args = sys.argv[1:]
-    supervisor_args = kwargs.get('supervisor_args')
+    supervisor_args = kwargs.get('supervisor_args', [])
     options = ClientOptions()
-    if supervisor_args is None:
-        options.realize(args=[])
-    else:
-        options.realize(args=supervisor_args)
+    options.realize(args=supervisor_args)
     status = "init"
     while 1:
         try:
@@ -52,7 +49,7 @@ def up(*args, **kwargs):
             configfile = os.path.join(os.getcwd(), options.configfile)
             supervisord = find_supervisord()
             cmd = [supervisord]
-            if supervisor_args is None:
+            if not supervisor_args:
                 cmd.extend(["-c", configfile])
             else:
                 cmd.extend(supervisor_args)
