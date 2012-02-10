@@ -69,7 +69,7 @@ def up(*args):
                 try:
                     rpc.supervisor.startProcess(name)
                 except xmlrpclib.Fault as e:
-                    if e.faultCode == 60: # already started
+                    if e.faultCode == 60:  # already started
                         continue
                     print >> sys.stderr, e.faultCode, e.faultString
                     sys.exit(1)
