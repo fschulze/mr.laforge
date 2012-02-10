@@ -46,13 +46,8 @@ def up(*args, **kwargs):
             if status == 'shutdown':
                 sys.stderr.write("\n")
             sys.stderr.write("Starting supervisord\n")
-            configfile = os.path.join(os.getcwd(), options.configfile)
             supervisord = find_supervisord()
-            cmd = [supervisord]
-            if not supervisor_args:
-                cmd.extend(["-c", configfile])
-            else:
-                cmd.extend(supervisor_args)
+            cmd = [supervisord] + supervisor_args
             retcode = subprocess.call(cmd)
             if retcode != 0:
                 sys.exit(retcode)
