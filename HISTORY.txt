@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.3 - Unreleased
+0.3 - 2012-04-03
 ----------------
 
 * Don't pass command line options to supervisor code.
