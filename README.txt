@@ -31,9 +31,9 @@ Running ``supervisorup`` without arguments will check whether ``supervisord``
 is running and if not will start it. You can also provide process names on the
 command line and those will be started if they are not already running.
 
-With ``waitforports`` you can check whether a process is listening on the
-specified ports. The script has some additional arguments you can list with
-``-h`` or ``--help``.
+With ``waitforports`` you can check whether one or more processes are listening
+on the specified ports. The script has some additional arguments you can list
+with ``-h`` or ``--help``.
 
 You can set the ``supervisor_args`` keyword argument to set supervisor arguments
 for the ``supervisorup`` script like the config file location::
