@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.4 - Unreleased
+0.4 - 2012-05-09
 ----------------
 
 * Added waitforports script and function to wait until a process is listening
