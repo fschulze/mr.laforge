@@ -11,6 +11,11 @@ install_requires = [
     'setuptools',
     'supervisor']
 
+try:
+    import argparse
+except ImportError:
+    install_requires.append('argparse')
+
 setup(
     name='mr.laforge',
     version=version,
@@ -29,5 +34,6 @@ setup(
     entry_points="""
     [console_scripts]
     supervisorup = mr.laforge:up
+    waitforports = mr.laforge:waitforports
     """
 )

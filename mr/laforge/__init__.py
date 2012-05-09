@@ -1,5 +1,6 @@
 from supervisor.options import ClientOptions
 from supervisor.xmlrpc import SupervisorTransport
+import argparse
 import os
 import socket
 import subprocess
@@ -76,3 +77,53 @@ def up(*args, **kwargs):
                     sys.exit(1)
             else:
                 print >> sys.stderr, "%s is already running" % name
+
+
+def waitforports(*args, **kwargs):
+    if not args:
+        args = sys.argv[1:]
+    timeout = kwargs.get('timeout', 30)
+    default_host = kwargs.get('host', 'localhost')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-t', '--timeout', type=int, default=timeout)
+    parser.add_argument('-H', '--default-host', default=default_host)
+    parser.add_argument('ports', nargs='+')
+    args = parser.parse_args(args)
+    default_ip = socket.gethostbyname(args.default_host)
+    timeout = args.timeout
+    ports = set()
+    for port in args.ports:
+        if ':' in port:
+            host, port = port.split(':')
+            port = int(port)
+            if not host.strip():
+                ip = default_ip
+            else:
+                ip = socket.gethostbyname(host)
+        else:
+            port = int(port)
+            ip = default_ip
+        ports.add((ip, port))
+    sys.stderr.write(
+        "Waiting for %s " % ", ".join(
+            "%s:%s" % x for x in sorted(ports)))
+    sys.stderr.flush()
+    while ports and timeout > 0:
+        for ip, port in list(ports):
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            if s.connect_ex((ip, port)) == 0:
+                ports.remove((ip, port))
+            s.close()
+        if ports:
+            time.sleep(1)
+            sys.stderr.write(".")
+            sys.stderr.flush()
+            timeout -= 1
+    sys.stderr.write("\n")
+    sys.stderr.flush()
+    if ports:
+        sys.stderr.write(
+            "Timeout on %s\n" % ", ".join(
+                "%s:%s" % x for x in sorted(ports)))
+        sys.stderr.flush()
+        sys.exit(1)

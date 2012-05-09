@@ -25,13 +25,18 @@ install it in a buildout::
     recipe = zc.recipe.egg
     eggs = mr.laforge
 
-Either way you will get a ``supervisorup`` script. Just running it will check
-whether ``supervisord`` is running and if not will start it. You can also provide
-process names on the command line and those will be started if they are not
-already running.
+Either way you will get a ``supervisorup`` and a ``waitforports`` script.
+
+Running ``supervisorup`` without arguments will check whether ``supervisord``
+is running and if not will start it. You can also provide process names on the
+command line and those will be started if they are not already running.
+
+With ``waitforports`` you can check whether a process is listening on the
+specified ports. The script has some additional arguments you can list with
+``-h`` or ``--help``.
 
 You can set the ``supervisor_args`` keyword argument to set supervisor arguments
-like the config file location::
+for the ``supervisorup`` script like the config file location::
 
     [mr.laforge]
     recipe = zc.recipe.egg
@@ -76,6 +81,8 @@ Another example is an initialization snippet in a script created by
 
 Now everytime you run the ``paster`` script created by this, it's checked that
 ``supervisord`` and the ``solr`` process controlled by it are running.
+
+The equivalent for the ``waitforports`` script is ``mr.laforge.waitforports``.
 
 .. _`zc.recipe.testrunner`: http://pypi.python.org/pypi/zc.recipe.testrunner
 .. _`zc.recipe.egg`: http://pypi.python.org/pypi/zc.recipe.egg
