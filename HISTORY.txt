@@ -1,6 +1,14 @@
 Changelog
 =========
 
+0.5 - Unreleased
+----------------
+
+* Allow setting supervisor arguments via the ``MR_LAFORGE_SUPERVISOR_ARGS``
+  environment variable.
+  [witsch]
+
+
 0.4 - 2012-05-09
 ----------------
 

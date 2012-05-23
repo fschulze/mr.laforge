@@ -43,6 +43,10 @@ for the ``supervisorup`` script like the config file location::
     eggs = mr.laforge
     arguments = supervisor_args=['-c', 'etc/my_supervisord.conf']
 
+Alternatively, supervisor arguments can also be set via the
+``MR_LAFORGE_SUPERVISOR_ARGS`` environment variable.
+
+
 Usage from a Python script
 --------------------------
 

@@ -29,10 +29,15 @@ def find_supervisord():
     sys.exit(1)
 
 
+def get_supervisor_args(kwargs):
+    return (kwargs.get('supervisor_args') or
+        os.environ.get('MR_LAFORGE_SUPERVISOR_ARGS', '').split())
+
+
 def up(*args, **kwargs):
     if not args:
         args = sys.argv[1:]
-    supervisor_args = kwargs.get('supervisor_args', [])
+    supervisor_args = get_supervisor_args(kwargs)
     options = ClientOptions()
     options.realize(args=supervisor_args)
     status = "init"
@@ -80,7 +85,7 @@ def up(*args, **kwargs):
 
 
 def shutdown(**kwargs):
-    supervisor_args = kwargs.get('supervisor_args', [])
+    supervisor_args = get_supervisor_args(kwargs)
     options = ClientOptions()
     options.realize(args=supervisor_args)
     try:
