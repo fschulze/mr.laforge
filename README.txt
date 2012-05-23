@@ -91,6 +91,9 @@ The equivalent for the ``waitforports`` script is ``mr.laforge.waitforports``.
 .. _`zc.recipe.testrunner`: http://pypi.python.org/pypi/zc.recipe.testrunner
 .. _`zc.recipe.egg`: http://pypi.python.org/pypi/zc.recipe.egg
 
+There is also a ``shutdown`` function with which you can shutdown supervisord
+from Python code.
+
 Add as plugin to supervisord
 ----------------------------
 
