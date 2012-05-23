@@ -108,7 +108,7 @@ def waitforports(*args, **kwargs):
     parser.add_argument('-t', '--timeout', type=int, default=timeout)
     parser.add_argument('-H', '--default-host', default=default_host)
     parser.add_argument('ports', nargs='+')
-    args = parser.parse_args(args)
+    args = parser.parse_args(map(str, args))
     default_ip = socket.gethostbyname(args.default_host)
     timeout = args.timeout
     ports = set()
