@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.5 - Unreleased
+0.5 - 2012-05-23
 ----------------
 
 * Allow setting supervisor arguments via the ``MR_LAFORGE_SUPERVISOR_ARGS``
