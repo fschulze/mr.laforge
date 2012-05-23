@@ -8,6 +8,9 @@ Changelog
   environment variable.
   [witsch]
 
+* Added ``shutdown`` function to shutdown supervisord from Python code.
+  [fschulze]
+
 
 0.4 - 2012-05-09
 ----------------
