@@ -30,7 +30,7 @@ def find_supervisord():
 
 
 def get_supervisor_args(kwargs):
-    return (kwargs.get('supervisor_args') or
+    return kwargs.get('supervisor_args',
         os.environ.get('MR_LAFORGE_SUPERVISOR_ARGS', '').split())
 
 
