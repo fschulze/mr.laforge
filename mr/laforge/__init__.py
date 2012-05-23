@@ -79,6 +79,21 @@ def up(*args, **kwargs):
                 print >> sys.stderr, "%s is already running" % name
 
 
+def shutdown(**kwargs):
+    supervisor_args = kwargs.get('supervisor_args', [])
+    options = ClientOptions()
+    options.realize(args=supervisor_args)
+    try:
+        rpc = get_rpc(options)
+        rpc.supervisor.shutdown()
+        print >> sys.stderr, "Shutting down supervisor"
+    except socket.error:
+        print >> sys.stderr, "Supervisor already shut down"
+    except xmlrpclib.Fault as e:
+        if e.faultString == 'SHUTDOWN_STATE':
+            print >> sys.stderr, "Supervisor already shutting down"
+
+
 def waitforports(*args, **kwargs):
     if not args:
         args = sys.argv[1:]
