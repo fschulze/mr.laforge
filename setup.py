@@ -13,6 +13,7 @@ install_requires = [
 
 try:
     import argparse
+    argparse    # make pyflakes happy...
 except ImportError:
     install_requires.append('argparse')
 
