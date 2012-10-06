@@ -87,6 +87,12 @@ Now everytime you run the ``paster`` script created by this, it's checked that
 ``supervisord`` and the ``solr`` process controlled by it are running.
 
 The equivalent for the ``waitforports`` script is ``mr.laforge.waitforports``.
+It takes a list of ports as arguments, which can be integers or strings which
+can also contain the host separated with a colon. You can also set the default
+host with the ``host`` keyword argument and the timeout value with the
+``timeout`` keyword argument. Here is an example::
+
+    mr.laforge.waitforports(8080, 'db-server.example.com:5432', timeout=10)
 
 .. _`zc.recipe.testrunner`: http://pypi.python.org/pypi/zc.recipe.testrunner
 .. _`zc.recipe.egg`: http://pypi.python.org/pypi/zc.recipe.egg
