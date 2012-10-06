@@ -1,7 +1,7 @@
 import os
 from setuptools import setup
 
-version = '0.6'
+version = '0.7'
 
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.txt')).read()
