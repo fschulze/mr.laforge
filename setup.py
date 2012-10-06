@@ -35,6 +35,7 @@ setup(
     entry_points="""
     [console_scripts]
     supervisorup = mr.laforge:up
+    supervisordown = mr.laforge:down
     waitforports = mr.laforge:waitforports
     """
 )

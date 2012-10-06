@@ -4,6 +4,9 @@ Changelog
 0.6 - Unreleased
 ----------------
 
+* Added ``supervisordown`` script and matching ``down`` method to make sure a
+  process is stopped.
+  [fschulze]
 
 
 0.5 - 2012-05-23

@@ -84,6 +84,56 @@ def up(*args, **kwargs):
                 print >> sys.stderr, "%s is already running" % name
 
 
+def down(*args, **kwargs):
+    if not args:
+        args = sys.argv[1:]
+    supervisor_args = get_supervisor_args(kwargs)
+    options = ClientOptions()
+    options.realize(args=supervisor_args)
+    status = "init"
+    while 1:
+        try:
+            rpc = get_rpc(options)
+            rpc.supervisor.getPID()
+            if status == 'shutdown':
+                sys.stderr.write("\n")
+            break
+        except socket.error:
+            if status == 'shutdown':
+                sys.stderr.write("\n")
+            sys.stderr.write("Starting supervisord\n")
+            supervisord = find_supervisord()
+            cmd = [supervisord] + supervisor_args
+            retcode = subprocess.call(cmd)
+            if retcode != 0:
+                sys.exit(retcode)
+            status = 'starting'
+        except xmlrpclib.Fault as e:
+            if e.faultString == 'SHUTDOWN_STATE':
+                if status == 'init':
+                    sys.stderr.write("Supervisor currently shutting down ")
+                    sys.stderr.flush()
+                    status = 'shutdown'
+                else:
+                    sys.stderr.write(".")
+                    sys.stderr.flush()
+                time.sleep(1)
+    if len(args):
+        for name in args:
+            info = rpc.supervisor.getProcessInfo(name)
+            if info['statename'] != 'STOPPED':
+                print "Stopping %s" % name
+                try:
+                    rpc.supervisor.stopProcess(name)
+                except xmlrpclib.Fault as e:
+                    # if e.faultCode == 60:  # already stopped
+                    #     continue
+                    print >> sys.stderr, e.faultCode, e.faultString
+                    sys.exit(1)
+            else:
+                print >> sys.stderr, "%s is already stopped" % name
+
+
 def shutdown(**kwargs):
     supervisor_args = get_supervisor_args(kwargs)
     options = ClientOptions()

@@ -25,11 +25,16 @@ install it in a buildout::
     recipe = zc.recipe.egg
     eggs = mr.laforge
 
-Either way you will get a ``supervisorup`` and a ``waitforports`` script.
+Either way you will get a ``supervisorup``, a ``supervisordown`` and a
+``waitforports`` script.
 
 Running ``supervisorup`` without arguments will check whether ``supervisord``
 is running and if not will start it. You can also provide process names on the
 command line and those will be started if they are not already running.
+
+The ``supervisordown`` script does the same as ``supervisorup``, but makes sure
+the process is stopped. This is useful for scripts which initialize a
+development database and similar tasks.
 
 With ``waitforports`` you can check whether one or more processes are listening
 on the specified ports. The script has some additional arguments you can list
@@ -85,6 +90,9 @@ Another example is an initialization snippet in a script created by
 
 Now everytime you run the ``paster`` script created by this, it's checked that
 ``supervisord`` and the ``solr`` process controlled by it are running.
+
+The ``down`` method can be used to make sure a process is stopped and is the
+base of the ``supervisordown`` script. It's used like the ``up`` method above.
 
 The equivalent for the ``waitforports`` script is ``mr.laforge.waitforports``.
 It takes a list of ports as arguments, which can be integers or strings which
