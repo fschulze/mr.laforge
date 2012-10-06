@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.6 - Unreleased
+0.6 - 2012-10-06
 ----------------
 
 * Added ``supervisordown`` script and matching ``down`` method to make sure a
