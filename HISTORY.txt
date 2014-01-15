@@ -4,6 +4,8 @@ Changelog
 0.7 - Unreleased
 ----------------
 
+* Add timeout to socket, so we don't hang on unavailable hosts.
+  [fschulze]
 
 
 0.6 - 2012-10-06

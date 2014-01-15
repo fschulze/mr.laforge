@@ -181,6 +181,7 @@ def waitforports(*args, **kwargs):
     while ports and timeout > 0:
         for ip, port in list(ports):
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.settimeout(1)
             if s.connect_ex((ip, port)) == 0:
                 ports.remove((ip, port))
             s.close()
