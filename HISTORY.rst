@@ -4,6 +4,9 @@ Changelog
 0.7 - Unreleased
 ----------------
 
+* Add Python 3.x support.
+  [fschulze]
+
 * Add timeout to socket, so we don't hang on unavailable hosts.
   [fschulze]
 

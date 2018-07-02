@@ -1,3 +1,4 @@
+from __future__ import print_function
 from supervisor.options import ClientOptions
 from supervisor.xmlrpc import SupervisorTransport
 import argparse
@@ -6,7 +7,10 @@ import socket
 import subprocess
 import sys
 import time
-import xmlrpclib
+try:
+    import xmlrpc.client as xmlrpclib
+except ImportError:
+    import xmlrpclib
 
 
 def get_rpc(options):
@@ -25,7 +29,7 @@ def find_supervisord():
     supervisord = os.path.join(os.getcwd(), 'bin', 'supervisord')
     if os.path.exists(supervisord):
         return supervisord
-    print >> sys.stderr, "Couldn't find supervisord"
+    print("Couldn't find supervisord", file=sys.stderr)
     sys.exit(1)
 
 
@@ -72,16 +76,16 @@ def up(*args, **kwargs):
         for name in args:
             info = rpc.supervisor.getProcessInfo(name)
             if info['statename'] != 'RUNNING':
-                print "Starting %s" % name
+                print("Starting %s" % name)
                 try:
                     rpc.supervisor.startProcess(name)
                 except xmlrpclib.Fault as e:
                     if e.faultCode == 60:  # already started
                         continue
-                    print >> sys.stderr, e.faultCode, e.faultString
+                    print(e.faultCode, e.faultString, file=sys.stderr)
                     sys.exit(1)
             else:
-                print >> sys.stderr, "%s is already running" % name
+                print("%s is already running" % name, file=sys.stderr)
 
 
 def down(*args, **kwargs):
@@ -122,16 +126,16 @@ def down(*args, **kwargs):
         for name in args:
             info = rpc.supervisor.getProcessInfo(name)
             if info['statename'] != 'STOPPED':
-                print "Stopping %s" % name
+                print("Stopping %s" % name)
                 try:
                     rpc.supervisor.stopProcess(name)
                 except xmlrpclib.Fault as e:
                     # if e.faultCode == 60:  # already stopped
                     #     continue
-                    print >> sys.stderr, e.faultCode, e.faultString
+                    print(e.faultCode, e.faultString, file=sys.stderr)
                     sys.exit(1)
             else:
-                print >> sys.stderr, "%s is already stopped" % name
+                print("%s is already stopped" % name, file=sys.stderr)
 
 
 def shutdown(**kwargs):
@@ -141,12 +145,12 @@ def shutdown(**kwargs):
     try:
         rpc = get_rpc(options)
         rpc.supervisor.shutdown()
-        print >> sys.stderr, "Shutting down supervisor"
+        print("Shutting down supervisor", file=sys.stderr)
     except socket.error:
-        print >> sys.stderr, "Supervisor already shut down"
+        print("Supervisor already shut down", file=sys.stderr)
     except xmlrpclib.Fault as e:
         if e.faultString == 'SHUTDOWN_STATE':
-            print >> sys.stderr, "Supervisor already shutting down"
+            print("Supervisor already shutting down", file=sys.stderr)
 
 
 def waitforports(*args, **kwargs):
