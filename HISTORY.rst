@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.7 - Unreleased
+0.7 - 2018-07-02
 ----------------
 
 * Add Python 3.x support.
