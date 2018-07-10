@@ -52,7 +52,7 @@ class LaForgeControllerPlugin(ControllerPluginBase):
             else:
                 try:
                     result = self.laforge.killProcess(name, signal)
-                except xmlrpclib.Fault, e:
+                except xmlrpclib.Fault as e:
                     error = self._killresult({'status':e.faultCode,
                                                'name':name,
                                                'description':e.faultString})
