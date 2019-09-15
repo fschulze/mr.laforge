@@ -1,7 +1,7 @@
+from supervisor.compat import Fault
 from supervisor.options import split_namespec
 from supervisor.supervisorctl import ControllerPluginBase
-from supervisor import xmlrpc
-import xmlrpclib
+from supervisor.xmlrpc import Faults
 
 
 class LaForgeControllerPlugin(ControllerPluginBase):
@@ -13,13 +13,13 @@ class LaForgeControllerPlugin(ControllerPluginBase):
         name = result['name']
         code = result['status']
         template = '%s: ERROR (%s)'
-        if code == xmlrpc.Faults.BAD_NAME:
+        if code == Faults.BAD_NAME:
             return template % (name, 'no such process')
-        elif code == xmlrpc.Faults.BAD_ARGUMENTS:
+        elif code == Faults.BAD_ARGUMENTS:
             return template % (name, 'signal not defined')
-        elif code == xmlrpc.Faults.NOT_RUNNING:
+        elif code == Faults.NOT_RUNNING:
             return template % (name, 'not running')
-        elif code == xmlrpc.Faults.SUCCESS:
+        elif code == Faults.SUCCESS:
             return '%s: signal sent' % name
         # assertion
         raise ValueError('Unknown result code %s for %s' % (code, name))
@@ -52,7 +52,7 @@ class LaForgeControllerPlugin(ControllerPluginBase):
             else:
                 try:
                     result = self.laforge.killProcess(name, signal)
-                except xmlrpclib.Fault as e:
+                except Fault as e:
                     error = self._killresult({'status':e.faultCode,
                                                'name':name,
                                                'description':e.faultString})

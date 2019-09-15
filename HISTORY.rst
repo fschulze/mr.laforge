@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.9 - Unreleased
+----------------
+
+* Fix import of controllerplugin for Python 3.x.
+  [fschulze]
+
+
 0.8 - 2018-07-10
 ----------------
 
