@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.9 - Unreleased
+0.9 - 2019-09-15
 ----------------
 
 * Fix import of controllerplugin for Python 3.x.

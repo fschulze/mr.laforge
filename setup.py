@@ -1,7 +1,7 @@
 import os
 from setuptools import setup
 
-version = '0.8'
+version = '0.9'
 
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
@@ -30,7 +30,7 @@ setup(
     packages=['mr', 'mr.laforge'],
     namespace_packages=['mr'],
     include_package_data=True,
-    zip_safe=False,
+    zip_safe=True,
     install_requires=install_requires,
     entry_points="""
     [console_scripts]
